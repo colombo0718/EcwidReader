@@ -16,6 +16,8 @@ for(var i=0;i<length;i++){
 }
 fs.writeFile('data1.txt',data1)
 
+var ppk='',tcm='',cct='',ycn='',kp='';
+
 length=data1.split('\n').length
 console.log(length)
 for(var i=0;i<length;i++){
