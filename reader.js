@@ -1,8 +1,10 @@
 const fs=require('fs');
 
-var data0=fs.readFileSync('orders_2017-05-22_13-38.csv','utf-8'),
+var filename='orders_2017-05-26_10-26.csv',
+	data0=fs.readFileSync(filename,'utf-8'),
 	data1='',
-	output='';
+	output='',
+	ppk='',tcm='',cct='',ycn='',kp='';
 
 var length=data0.split('\n').length
 for(var i=0;i<length;i++){
@@ -16,16 +18,17 @@ for(var i=0;i<length;i++){
 }
 fs.writeFile('data1.txt',data1)
 
-var ppk='',tcm='',cct='',ycn='',kp='';
+
 
 length=data1.split('\n').length
 console.log(length)
-for(var i=0;i<length;i++){
+for(var i=length-1;i>0;i=i-1){
 	var line=data1.split('\n')[i],
 		id=data1.split('\n')[i].split(';')[0];
 	if(id>574){
 		var clas=line.split(';')[3],
 			name=line.split('學員姓名:')[1].split(',')[0],
+			qtys=line.split(';')[6],
 			scho=line.split('就讀學校:')[1].split(',')[0],
 			grad=line.split('就讀年級:')[1].split(',')[0],
 			pare=line.split('家長姓名:')[1].split(',')[0],
@@ -36,13 +39,33 @@ for(var i=0;i<length;i++){
 			mone=line.split(';')[5],
 			comp=line.split('電腦需求:')[1].split(',')[0],
 			aids=line.split('教具選購:').length;
+			if(qtys>1){name=name+'x'+qtys}
 			if(comp[0]=='自'){comp=''}
 			if(aids>1){aids=line.split('教具選購:')[1].split(',')[0]}
 				else{aids=''}
 			if(aids.length>20){aids=line.split('教具選購:')[1].split('";')[0]}
-		output=output+id+','+clas+','+name+','+scho+','+grad+','+pare+','+phon+','+mail+','+eche+','+offe+','+mone+','+comp+','+aids+'\n'
+		output=id+','+clas+','+name+','+scho+','+grad+','+pare+','+phon+','+mail+','+eche+','+offe+','+mone+','+comp+','+aids+'\n'
+
+		var region=clas.split('(')[1][0];	
+		switch(region){
+			case '北':
+			ppk+=output
+			break;
+			case '桃':
+			tcm+=output
+			break;
+			case '中':
+			cct+=output
+			break;
+			case '雲':
+			ycn+=output
+			break;
+			case '高':
+			kp+=output
+			break;
+		}
 	}
 }
 
 //fs.writeFile('temp.txt','')
-fs.writeFile('temp.txt',output)
+fs.writeFile(filename.replace('orders','output'),ppk+'\n'+tcm+'\n'+cct+'\n'+ycn+'\n'+kp)
