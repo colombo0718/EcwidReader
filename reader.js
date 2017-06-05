@@ -1,6 +1,6 @@
 const fs=require('fs');
 
-var filename='orders_2017-05-31_08-52.csv',
+var filename='orders_2017-06-05_10-37.csv',
 	data0=fs.readFileSync(filename,'utf-8'),
 	data1='',
 	output='',
@@ -38,13 +38,16 @@ for(var i=length-1;i>0;i=i-1){
 			offe=line.split('優惠條件:')[1].split(',')[0],
 			mone=line.split(';')[5],
 			comp=line.split('電腦需求:')[1].split(',')[0],
-			aids=line.split('教具購買:').length;
+			aids=line.split('教具選購:').length,
+			food=line.split('午餐調查:')[1].split(',')[0];
 			if(qtys>1){name=name+'x'+qtys}
 			if(comp[0]=='自'){comp=''}
-			if(aids>1){aids=line.split('教具選購:')[1].split(',')[0]+'+'+line.split('教具選購:')[1].split(',')[0]+'+'+line.split('教具選購:')[1].split(',')[0]}
+			// if(aids>1){aids=line.split('教具選購:')[1].split(',')[0]+'+'+line.split('教具選購:')[1].split(',')[0]+'+'+line.split('教具選購:')[1].split(',')[0]}
+			if(aids>1){aids=line.split('教具選購:')[1].split(',')[0]}
 				else{aids=''}
 			if(aids.length>20){aids=line.split('教具選購:')[1].split('";')[0]}
-		output=id+','+clas+','+name+','+scho+','+grad+','+pare+','+phon+','+mail+','+eche+','+offe+','+mone+','+comp+','+aids+'\n'
+			if(food.length>20){food=line.split('午餐調查:')[1].split('";')[0]}
+		output=id+','+clas+','+name+','+scho+','+grad+','+pare+','+phon+','+mail+','+eche+','+offe+','+mone+','+comp+','+aids+',,'+food+'\n'
 
 		var region=clas.split('(')[1][0];	
 		switch(region){
