@@ -1,6 +1,6 @@
 const fs=require('fs');
 
-var filename='orders_2017-06-05_10-37.csv',
+var filename='orders_2017-06-13_11-14.csv',
 	data0=fs.readFileSync(filename,'utf-8'),
 	data1='',
 	output='',
@@ -17,6 +17,13 @@ for(var i=0;i<length;i++){
 	}
 }
 fs.writeFile('data1.txt',data1)
+
+
+
+for(var i=0;i<53;i+=1){
+//console.log(i+' '+data1.split('\n')[0].split(';')[i]+':'+data1.split('\n')[3].split(';')[i])
+}
+
 
 
 
@@ -39,7 +46,9 @@ for(var i=length-1;i>0;i=i-1){
 			mone=line.split(';')[5],
 			comp=line.split('電腦需求:')[1].split(',')[0],
 			aids=line.split('教具選購:').length,
-			food=line.split('午餐調查:')[1].split(',')[0];
+			food=line.split('午餐調查:')[1].split(',')[0],
+			stat=line.split(';')[34];
+			if(stat=='已取消'){continue;}
 			if(qtys>1){name=name+'x'+qtys}
 			if(comp[0]=='自'){comp=''}
 			// if(aids>1){aids=line.split('教具選購:')[1].split(',')[0]+'+'+line.split('教具選購:')[1].split(',')[0]+'+'+line.split('教具選購:')[1].split(',')[0]}
